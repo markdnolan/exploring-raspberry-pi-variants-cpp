@@ -15,7 +15,8 @@
 #include<fstream>
 #include<string>
 #include<unistd.h>
-using namespace std:
+
+using namespace std;
 
 #define GPIO_NUMBER "4"
 #define GPIO4_PATH "/sys/class/gpio/gpio4/"
@@ -58,10 +59,10 @@ int main(int argc, char* argv[]){
 		writeGPIO(string(GPIO_SYSFS), "unexport", GPIO_NUMBER);
 	}
 	else if (cmd=="status"){
-		std::fstream fs;				// Do we need the std:: here? Isn't the namespace implied?
-		fs.open( GPIO4_PATH "value", std::fstream::in);
+		fstream fs;				// Do we need the std:: here? Isn't the namespace implied?
+		fs.open( GPIO4_PATH "value", fstream::in);
 		string line;
-		while(getline(fs,line)) << "The state is: " << line <<endl;
+		while(getline(fs,line)) cout << "The state is: " << line <<endl;
 		fs.close();
 	}
 	else{

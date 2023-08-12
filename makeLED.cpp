@@ -25,7 +25,12 @@ using namespace std;
 void writeGPIO(string path, string filename, string value){
 	fstream fs;
 	fs.open((path + filename).c_str(), fstream::out);
-	fs << value;
+	if (fs.is_open()){
+		fs << value;
+	}
+	else{
+		cout << "Couldn't open file." << endl;
+	}
 	fs.close();
 }
 
@@ -59,10 +64,15 @@ int main(int argc, char* argv[]){
 		writeGPIO(string(GPIO_SYSFS), "unexport", GPIO_NUMBER);
 	}
 	else if (cmd=="status"){
-		fstream fs;				// Do we need the std:: here? Isn't the namespace implied?
+		fstream fs;
 		fs.open( GPIO4_PATH "value", fstream::in);
-		string line;
-		while(getline(fs,line)) cout << "The state is: " << line <<endl;
+		if (fs.is_open()){
+			string line;
+			while(getline(fs,line)) cout << "The state is: " << line <<endl;
+		}
+		else{
+			cout << "Couldn't open file." << endl;
+		}
 		fs.close();
 	}
 	else{
